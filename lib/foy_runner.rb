@@ -21,6 +21,19 @@ module Foy
           end
         end
       end
+
+      def self.update_packages
+        packages = Foy::API::Client::Base.get_packages(system: 'rubygems')
+
+        updated_packages = packages.collect do |package|
+          {
+            name: package.name,
+            version: Foy::RubyHandler.latest_version_for(package.name)
+          }
+        end
+
+        Foy::API::Client::Base.put_packages(system: 'rubygems', packages: updated_packages)
+      end
     end
   end
 end

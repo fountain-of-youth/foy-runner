@@ -59,4 +59,27 @@ describe Foy::Runner::Base do
       end
     end
   end
+
+  describe ".update_packages" do
+    let(:packages) do
+      [OpenStruct.new(name: 'rspec', version: '1.0.0')]
+    end
+
+    before do
+      Foy::API::Client::Base.stub(:get_packages).and_return(packages)
+      Foy::API::Client::Base.stub(:put_packages)
+      Foy::RubyHandler.stub(:latest_version_for).and_return('2.0.0')
+    end
+
+    it "uses RubyHandler to get the last version" do
+      Foy::RubyHandler.should_receive(:latest_version_for).once
+      Foy::Runner::Base.update_packages
+    end
+
+    it "sends updated packages" do
+      Foy::API::Client::Base.should_receive(:put_packages).
+        with(system: 'rubygems', packages: [{name: 'rspec', version: '2.0.0'}])
+      Foy::Runner::Base.update_packages
+    end
+  end
 end
