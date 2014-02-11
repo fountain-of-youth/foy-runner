@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+require 'foy_api_client'
+require_relative '../lib/foy_runner'
+
+client = Foy::API::Client::Base.new ARGV[0]
+runner = Foy::Runner::Base.new client
+
+runner.collect_project_packages
+runner.update_packages

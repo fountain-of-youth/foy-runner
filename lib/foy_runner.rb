@@ -1,6 +1,4 @@
-require "foy_runner/version"
-
-require "foy_runner/git_fetcher"
+require_relative "foy_runner/git_fetcher"
 require "foy_api_client"
 
 module Foy
