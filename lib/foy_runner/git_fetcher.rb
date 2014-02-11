@@ -13,7 +13,7 @@ module Foy
       end
 
       def clean_up
-        FileUtils.remove_entry_secure @dir if @dir
+        FileUtils.remove_entry_secure(@dir, true) if @dir
       end
     end
   end

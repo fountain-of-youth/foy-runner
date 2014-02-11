@@ -18,7 +18,7 @@ describe Foy::Runner::GitFetcher do
       end
 
       it "removes folder securely" do
-        FileUtils.should_receive(:remove_entry_secure)
+        FileUtils.should_receive(:remove_entry_secure).with(an_instance_of(String), true)
         fetcher.clean_up
       end
     end
