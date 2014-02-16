@@ -11,7 +11,7 @@ module Foy
           git_fetcher = Foy::Runner::GitFetcher.new(project.repository)
           begin
             file = git_fetcher.get("Gemfile.lock")
-            packages = Foy::RubyHandler.parse(file)
+            packages = Foy::Runner::Handlers::Ruby.parse(file)
             @client.put_project_packages(system: 'rubygems', project_id: project.id, packages: packages)
           #rescue
             #TODO error handling
@@ -27,7 +27,7 @@ module Foy
         updated_packages = packages.collect do |package|
           {
             name: package.name,
-            version: Foy::RubyHandler.latest_version_for(package.name)
+            version: Foy::Runner::Handlers::Ruby.latest_version_for(package.name)
           }
         end
 

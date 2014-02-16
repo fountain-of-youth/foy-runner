@@ -24,5 +24,4 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "byebug"
 
   spec.add_dependency "foy_api_client", "~> 0.1.0"
-  spec.add_dependency "foy_ruby_handler", "~> 0.1.0"
 end

@@ -37,7 +37,7 @@ describe Foy::Runner::Base do
       client.stub(:get_projects).and_return(projects)
       client.stub(:put_project_packages)
       Foy::Runner::GitFetcher.stub(:new).and_return(fetcher)
-      Foy::RubyHandler.stub(:parse)
+      Foy::Runner::Handlers::Ruby.stub(:parse)
     end
 
     context "successful collecting" do
@@ -47,7 +47,7 @@ describe Foy::Runner::Base do
       end
 
       it "sends packages to foy-api for each project" do
-        Foy::RubyHandler.stub(:parse).
+        Foy::Runner::Handlers::Ruby.stub(:parse).
           and_return(packages1, packages2)
 
         client.should_receive(:put_project_packages).
@@ -76,11 +76,11 @@ describe Foy::Runner::Base do
     before do
       client.stub(:get_packages).and_return(packages)
       client.stub(:put_packages)
-      Foy::RubyHandler.stub(:latest_version_for).and_return('2.0.0')
+      Foy::Runner::Handlers::Ruby.stub(:latest_version_for).and_return('2.0.0')
     end
 
     it "uses RubyHandler to get the last version" do
-      Foy::RubyHandler.should_receive(:latest_version_for).once
+      Foy::Runner::Handlers::Ruby.should_receive(:latest_version_for).once
       subject.update_packages
     end
 
